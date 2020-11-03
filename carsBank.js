@@ -10,3 +10,11 @@ const data = [
     id: 9, make: "Ram", model: "1500", upvotes: 544},
     id: 10, make: "Chrysler", model: "Pacifica", upvotes: 206},
 ]
+const list = () {
+    return [...data] //returning a copy of the arrary
+};
+const find = (id) => {
+    const post = data.find(post => post.id === +id)
+};
+
+module.exports = {list: list, find: find}
