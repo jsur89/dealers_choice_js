@@ -4,18 +4,14 @@ const express = require("express");
 const app = express();
 // const morgan = require("morgan");
 const carsBank = require("./carsBank");
-
 // const list = () => {
 //   return [...data]; //returning a copy of the arrary
 // };
 // const find = (id) => {
 //   const post = data.find((post) => post.id === +id);
 // };
-
 // app.use(morgan("dev"));
-
 app.use(express.static(path.join(__dirname, "public")));
-
 app.get("/", (req, res) => {
   const html = `<!DOCTYPE html>
     <html>
@@ -26,7 +22,7 @@ app.get("/", (req, res) => {
     </h1>
     <body>
 <div class="container1">
-${carsBank.data
+${carsBank
   .map(
     (car) =>
       `<div class="content"> <h3><a href=/car/${car.id}>${car.model}</a></h3></div>`
@@ -38,10 +34,11 @@ ${carsBank.data
 });
 
 app.get("/car/:id", (req, res) => {
-  //use carId as parameter and find it in the data using the function .find()
-  //create a variable such as consCar = carsBank.data.find()
-  ///camera/:cameraId"
-  const camera = data.cameras.find((c) => c.cameraId === req.params.cameraId);
+  console.log(req.params.id);
+  const data = carsBank.find((car) => {
+    return car.id === req.params.id;
+  });
+  console.log("data", data);
   const html = `<!DOCTYPE html>
       <html>
       <head>
@@ -51,12 +48,13 @@ app.get("/car/:id", (req, res) => {
       </h1>
       <body>
   <div class="container1">
- 
+        ${data.model} <br>
+        ${data.description}
+        ${data.make}
       </body>
       </html>`;
   res.send(html);
 });
-
 const PORT = 2020;
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
